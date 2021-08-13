@@ -34,10 +34,41 @@ yargs.command({
 	describe: 'Show all data',
 	handler(){
 		contacts.listContact()
+
 	}
 })
 
-.demandOption()
+yargs.command({
+	command: 'show',
+	describe: 'Show a specific data',
+	builder: {
+		name: {
+			describe: 'Full Name',
+			demandOption: true,
+			type: 'string'
+		}
+	},
+	handler(argv){
+		contacts.showContact(argv.name);
+	}
+
+})
+
+yargs.command({
+	command: 'drop',
+	describe: 'Delete a data',
+	builder: {
+		name: {
+			describe: 'Full Name',
+			demandOption: true,
+			type: 'string'
+		}
+	},
+	handler(argv) {
+		contacts.deleteContact(argv.name)
+	}
+})
+
 
 
 

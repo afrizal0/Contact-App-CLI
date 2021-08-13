@@ -60,4 +60,34 @@ const listContact = () => {
 	})
 }
 
-module.exports = { saveContact, listContact }
+const showContact = (name) => {
+	const contacts = loadContact();
+	const result = contacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase())
+	if (!result) {
+		console.log(chalk.bgRed.black.bold(`Cannot find ${name}`))
+		return false;
+	}
+
+	console.log(chalk.bgGreen.black.bold(`Successfull find ${name} : `))
+	console.log(name)
+	console.log(result.phoneNum)
+	if(result.email) {
+		console.log(result.email)
+	}
+	
+
+}
+
+const deleteContact = (name) => {
+	const contacts = loadContact()
+	const result = contacts.filter((contact) => contact.name.toLowerCase() !== name.toLowerCase())
+	if(contacts.length === result.length){
+	 	console.log(chalk.bgRed.black.bold(`Cannot find ${name}`))
+		return false
+	}
+	fs.writeFileSync('data/contacts.json', JSON.stringify(result, null, 2))
+	console.log(chalk.bgGreen.black.bold(`Successfull delete data ${name} `))
+}
+
+
+module.exports = { saveContact, listContact, showContact, deleteContact }
